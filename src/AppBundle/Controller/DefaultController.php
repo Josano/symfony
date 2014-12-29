@@ -20,7 +20,7 @@ class DefaultController extends Controller
      */
     public function carroAction($marca, $modelo)
     {
-        return $this->render('AppBundle:Default:run.html.twig',['marca'=>strtoupper($marca), 'modelo'=>strtoupper($modelo)]);
+        return $this->render('AppBundle:Default:run.html.twig',['marca'=>$marca, 'modelo'=>$modelo]);
     }
 
 }
