@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Listagem de Veiculos</title>
+</head>
+<body>
+{% for key,value in veiculos %}
+    <li>Marca : {{ key }}<br />
+    Modelo : {{ value }}</li><br />
+{% endfor %}
+</body>
+</html>
