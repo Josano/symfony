@@ -10,10 +10,20 @@ class CarController extends Controller
 {
 
     /**
-     * @Route("/listagem/")
+     * @Route("/")
      * @Template()
      */
     public function indexAction()
+    {
+        $nome = 'Caio Weber Vidon de Souza';
+        return $this->render('CodeCarBundle:Car:index.html.twig',['nome'=>$nome]);
+    }
+
+    /**
+     * @Route("/cars")
+     * @Template()
+     */
+    public function carsAction()
     {
     	$veiculos = array("FIAT"=>"147 C/ CL", "BMW"=>"120iA 2.0 16V 156cv 3p", 
     					  "CITROEN"=>"AIRCROSS TENDANCE 1.6 Flex 16V 5p Mec.","ASTON MARTIN"=>"Rapide S 6.0 V12 550cv",
