@@ -3,19 +3,23 @@
 {% block title %}CodeCarBundle:Car:index{% endblock %}
 
 {% block body %}
-<h1>Lista de modelos de veículos</h1>
+<h1>Lista de modelos</h1>
 <table class="table table-condensed table-hover table-striped">
     <thead>
         <tr>
             <th>Marca</th>
             <th>Modelo</th>
+            <th>Ano</th>
+            <th>Cor</th>                        
         </tr>
     </thead>
     <tbody>
-{% for key,value in veiculos %}
+{% for veiculo in veiculos %}
     <tr>
-        <td>Marca : {{ key }}</td>
-        <td>Modelo : {{ value }}</td>
+        <td>{{ veiculo.fabricante }}</td>
+        <td>{{ veiculo.modelo }}</td>
+        <td>{{ veiculo.ano }}</td>
+        <td>{{ veiculo.cor }}</td>
     </tr>
 {% endfor %}
     </tbody>

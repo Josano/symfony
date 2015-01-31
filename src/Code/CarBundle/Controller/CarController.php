@@ -27,13 +27,20 @@ class CarController extends Controller
      */
     public function carsAction()
     {
-    	$veiculos = array("FIAT"=>"147 C/ CL", "BMW"=>"120iA 2.0 16V 156cv 3p", 
+    	/*$veiculos = array("FIAT"=>"147 C/ CL", "BMW"=>"120iA 2.0 16V 156cv 3p", 
     					  "CITROEN"=>"AIRCROSS TENDANCE 1.6 Flex 16V 5p Mec.","ASTON MARTIN"=>"Rapide S 6.0 V12 550cv",
     					  "Maserati"=>"GranTurismo S 4.7 V8 32V/ MC Line","GM - Chevrolet"=>"AGILE LTZ EASYTRONIC 1.4 8V",
     					  "VW - VolksWagen"=>"AMAROK CD2.0 16V/S CD2.0 16V TDI 4x2 Die","TOYOTA"=>"Corolla XEi 1.8/1.8 ",
     					  "PORSCHE"=>"911 Turbo Cabriolet 3.6/3.8","FERRARI"=>"F599 GTB Fiorano F1 6.0 V12 620cv"); 
 
-        return array('veiculos' => $veiculos);
+        return array('veiculos' => $veiculos);*/
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $repo = $em->getRepository("CodeCarBundle:Carro");
+
+        $veiculos = $repo->findAll();
+
+        return ['veiculos'=>$veiculos]; 
     }  
 
     /**
@@ -81,18 +88,22 @@ class CarController extends Controller
 
         for($i=0;$i<count($carros);$i++){
             $novoModelo = new Carro();
-            $c=0;
+
             foreach($carros[$i] as $key=>$value){
-                $c++;
-                if($key == 'modelo'){
-                    $novoModelo->setModelo($value);
-                }else if($key == 'fabricante'){
-                          $novoModelo->setFabricante($value);      
-                }else if($key == 'ano') {
-                          $novoModelo->setAno($value);
-                }else{
-                        $novoModelo->setCor($value);
-                }   
+                switch ($key) {
+                  case $key == 'modelo':
+                       $novoModelo->setModelo($value);
+                    break;
+                  case $key == 'fabricante':
+                       $novoModelo->setFabricante($value); 
+                    break;
+                  case $key == 'ano':
+                       $novoModelo->setAno($value);
+                    break;
+                  case $key == 'cor':
+                       $novoModelo->setCor($value);
+                    break;        
+                }  
             }
             
             $em->persist($novoModelo);  
