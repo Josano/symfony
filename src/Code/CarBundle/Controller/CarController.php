@@ -85,8 +85,9 @@ class CarController extends Controller
                        );
 
         $em = $this->getDoctrine()->getEntityManager();
+        $tam = count($carros) 
 
-        for($i=0;$i<count($carros);$i++){
+        for($i=0;$i<$tam;$i++){
             $novoModelo = new Carro();
 
             foreach($carros[$i] as $key=>$value){
