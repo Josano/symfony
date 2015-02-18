@@ -3,10 +3,11 @@
 namespace Code\CarBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  *@ORM\Table(name="fabricante")
- *@ORM\Entity(repositoryClass="Code\CarBundle\Entity\FabricanteRepository") 
+ *@ORM\Entity(repositoryClass="Code\CarBundle\Entity\FabricanteRepository")  
  */
 class Fabricante
 {
@@ -22,8 +23,15 @@ class Fabricante
      */
 	private $nome;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Code\CarBundle\Entity\Carro", mappedBy="fabricante_id")
+     **/
+    private $carros;
 
-
+    public function __construct()
+    {
+        $this->carros = new ArrayCollection();
+    }
     /**
      * Gets the value of id.
      *
@@ -68,6 +76,30 @@ class Fabricante
     public function setNome($nome)
     {
         $this->nome = $nome;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of carros.
+     *
+     * @return mixed
+     */
+    public function getCarros()
+    {
+        return $this->carros;
+    }
+
+    /**
+     * Sets the value of carros.
+     *
+     * @param mixed $carros the carros
+     *
+     * @return self
+     */
+    public function setCarros($carros)
+    {
+        $this->carros = $carros;
 
         return $this;
     }

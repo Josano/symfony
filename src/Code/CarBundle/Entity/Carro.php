@@ -5,39 +5,39 @@ namespace Code\CarBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- *@ORM\Table(name="carro")
+ *@ORM\Table("carro")
  *@ORM\Entity(repositoryClass="Code\CarBundle\Entity\CarroRepository") 
  */
 class Carro
 {
 
-	/**
+    /**
      * @ORM\Column(type="integer", length=11)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-	private $id;
+    private $id;
 
-	 /**
+     /**
      * @ORM\Column(name="modelo", type="string", length=255)
-     */	
-	private $modelo;
+     */ 
+    private $modelo;
 
-	/**
+    /**
      * @ORM\Column(type="integer", length=11)
-     */	
-	private $fabricante;
+     */     
+    private $ano;
 
-	/**
-     * @ORM\Column(type="integer", length=11)
-     */		
-	private $ano;
-
-	 /**
+     /**
      * @ORM\Column(name="cor", type="string", length=50)
-     */		
-	private $cor;
+     */     
+    private $cor;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Code\CarBundle\Entity\Fabricante", inversedBy="carros")
+     * @ORM\JoinColumn(name="fabricante_id", referencedColumnName="id")
+     **/
+    private $fabricante_id;
 
     /**
      * Gets the value of id.
@@ -88,30 +88,6 @@ class Carro
     }
 
     /**
-     * Gets the value of fabricante.
-     *
-     * @return mixed
-     */
-    public function getFabricante()
-    {
-        return $this->fabricante;
-    }
-
-    /**
-     * Sets the value of fabricante.
-     *
-     * @param mixed $fabricante the fabricante
-     *
-     * @return self
-     */
-    public function setFabricante($fabricante)
-    {
-        $this->fabricante = $fabricante;
-
-        return $this;
-    }
-
-    /**
      * Gets the value of ano.
      *
      * @return mixed
@@ -155,6 +131,30 @@ class Carro
     public function setCor($cor)
     {
         $this->cor = $cor;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of fabricante_id.
+     *
+     * @return mixed
+     */
+    public function getFabricante_id()
+    {
+        return $this->fabricante_id;
+    }
+
+    /**
+     * Sets the value of fabricante_id.
+     *
+     * @param mixed $fabricante_id the fabricante_id
+     *
+     * @return self
+     */
+    public function setFabricante_id($fabricante_id)
+    {
+        $this->fabricante_id = $fabricante_id;
 
         return $this;
     }

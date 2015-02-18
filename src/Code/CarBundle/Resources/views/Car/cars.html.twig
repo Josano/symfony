@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}CodeCarBundle:Car:index{% endblock %}
+{% block title %}Listagem de Carros por fabricante{% endblock %}
 
 {% block body %}
 <h1>Lista de modelos</h1>
@@ -13,10 +13,10 @@
             <th>Cor</th>                        
         </tr>
     </thead>
-    <tbody>
+    <tbody>     
 {% for veiculo in veiculos %}
     <tr>
-        <td>{{ veiculo.fabricante }}</td>
+        <td>{{ veiculo.fabricante_id.nome }}</td>
         <td>{{ veiculo.modelo }}</td>
         <td>{{ veiculo.ano }}</td>
         <td>{{ veiculo.cor }}</td>

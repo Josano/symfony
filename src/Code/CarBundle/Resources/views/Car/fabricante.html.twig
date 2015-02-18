@@ -1,0 +1,19 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Listar Modelo por fabricante{% endblock %}
+
+{% block body %}
+<h1>Modelo por fabricante</h1>
+<table class="table table-condensed table-hover table-striped">
+    <tbody>     
+{% for fabricante in fabricantes %}
+    <thead>
+        <p><h3>O modelo: <b>{{ fabricante.modelo }}</b> é da marca: <b>{{ fabricante.nome }}</b></h3></p>
+    </thead>
+{% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+
+

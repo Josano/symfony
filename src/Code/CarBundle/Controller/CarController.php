@@ -14,7 +14,6 @@ class CarController extends Controller
 
     /**
      * @Route("/")
-     * @Template()
      */
     public function indexAction()
     {
@@ -22,26 +21,32 @@ class CarController extends Controller
     }
 
     /**
-     * @Route("/cars")
-     * @Template()
+     * @Route("/listarCarros")
      */
     public function carsAction()
     {
-    	/*$veiculos = array("FIAT"=>"147 C/ CL", "BMW"=>"120iA 2.0 16V 156cv 3p", 
-    					  "CITROEN"=>"AIRCROSS TENDANCE 1.6 Flex 16V 5p Mec.","ASTON MARTIN"=>"Rapide S 6.0 V12 550cv",
-    					  "Maserati"=>"GranTurismo S 4.7 V8 32V/ MC Line","GM - Chevrolet"=>"AGILE LTZ EASYTRONIC 1.4 8V",
-    					  "VW - VolksWagen"=>"AMAROK CD2.0 16V/S CD2.0 16V TDI 4x2 Die","TOYOTA"=>"Corolla XEi 1.8/1.8 ",
-    					  "PORSCHE"=>"911 Turbo Cabriolet 3.6/3.8","FERRARI"=>"F599 GTB Fiorano F1 6.0 V12 620cv"); 
-
-        return array('veiculos' => $veiculos);*/
         $em = $this->getDoctrine()->getEntityManager();
 
         $repo = $em->getRepository("CodeCarBundle:Carro");
 
-        $veiculos = $repo->findAll();
+        $veiculos = $repo->findBy(array(), array('fabricante_id'=>'ASC'));
 
-        return ['veiculos'=>$veiculos]; 
-    }  
+        return $this->render('CodeCarBundle:Car:cars.html.twig', ['veiculos'=>$veiculos]);
+    } 
+
+    /**
+     * @Route("/listarFabricante")
+     */
+    public function fabricanteAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $repo = $em->getRepository("CodeCarBundle:Carro");
+
+        $fabricante = $repo->getFabricante('Palio');
+
+        return $this->render('CodeCarBundle:Car:fabricante.html.twig', ['fabricantes'=>$fabricante]);
+    }      
 
     /**
      * @Route("/adicionarFabricante")
@@ -80,12 +85,13 @@ class CarController extends Controller
                           array("modelo" => "AGILE LTZ EASYTRONIC 1.4 8V", "fabricante" => 6, "ano" => 2008, "cor"=> "CINZA"),
                           array("modelo" => "AMAROK CD2.0 16V/S CD2.0 16V TDI 4x2 Die", "fabricante" => 7, "ano" => 2014, "cor"=> "PRATA"),
                           array("modelo" => "Corolla XEi 1.8/1.8", "fabricante" => 8, "ano" => 2015, "cor"=> "ROXO"),
+                          array("modelo" => "Palio 1.0 Celebr. ECONOMY F.Flex 8V 4p", "fabricante" => 1, "ano" => 2015, "cor"=> "GRAFITE"),
                           array("modelo" => "911 Turbo Cabriolet 3.6/3.8", "fabricante" => 9, "ano" => 2003, "cor"=> "PRETO"),
                           array("modelo" => "F599 GTB Fiorano F1 6.0 V12 620cv", "fabricante" => 10, "ano" => 2015, "cor"=> "VERMELHO"),                                
                        );
 
         $em = $this->getDoctrine()->getEntityManager();
-        $tam = count($carros) 
+        $tam = count($carros); 
 
         for($i=0;$i<$tam;$i++){
             $novoModelo = new Carro();
@@ -96,7 +102,8 @@ class CarController extends Controller
                        $novoModelo->setModelo($value);
                     break;
                   case $key == 'fabricante':
-                       $novoModelo->setFabricante($value); 
+                       $fabricante = $this->getDoctrine()->getManager()->getRepository('CodeCarBundle:Fabricante')->findOneById($value);
+                       $novoModelo->setFabricante_id($fabricante); 
                     break;
                   case $key == 'ano':
                        $novoModelo->setAno($value);
