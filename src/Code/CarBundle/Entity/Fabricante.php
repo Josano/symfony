@@ -24,7 +24,7 @@ class Fabricante
 	private $nome;
 
     /**
-     * @ORM\OneToMany(targetEntity="Code\CarBundle\Entity\Carro", mappedBy="fabricante")
+     * @ORM\OneToMany(targetEntity="Code\CarBundle\Entity\Carro", mappedBy="fabricante", orphanRemoval=true)
      **/
     private $carros;
 

@@ -35,7 +35,7 @@ class Carro
 
     /**
      * @ORM\ManyToOne(targetEntity="Code\CarBundle\Entity\Fabricante", inversedBy="carros")
-     * @ORM\JoinColumn(name="fabricante", referencedColumnName="id")
+     * @ORM\JoinColumn(name="fabricante", referencedColumnName="id", onDelete="SET NULL")
      **/
     private $fabricante;
 
