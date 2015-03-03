@@ -10,7 +10,7 @@ class CarroRepository extends EntityRepository {
 
 		return $this
 			->createQueryBuilder('c')
-			->innerjoin('c.fabricante_id', 'f')
+			->innerjoin('c.fabricante', 'f')
 			->select('c.modelo, f.nome , c.ano, c.cor')
 			->where('c.modelo LIKE :modelo')
 			->setParameter('modelo', '%'.$modelo.'%')

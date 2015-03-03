@@ -24,7 +24,7 @@ class Fabricante
 	private $nome;
 
     /**
-     * @ORM\OneToMany(targetEntity="Code\CarBundle\Entity\Carro", mappedBy="fabricante_id")
+     * @ORM\OneToMany(targetEntity="Code\CarBundle\Entity\Carro", mappedBy="fabricante")
      **/
     private $carros;
 
@@ -97,9 +97,9 @@ class Fabricante
      *
      * @return self
      */
-    public function setCarros($carros)
+    public function setCarros(Carro $carros)
     {
-        $this->carros = $carros;
+        $this->carros[] = $carro;
 
         return $this;
     }

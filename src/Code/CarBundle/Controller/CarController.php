@@ -6,14 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
-use Code\CarBundle\Entity\Fabricante;
 use Code\CarBundle\Entity\Carro;
 
 class CarController extends Controller
 {
 
     /**
-     * @Route("/")
+     * @Route("/", name="carro_index")
      */
     public function indexAction()
     {
@@ -21,7 +20,7 @@ class CarController extends Controller
     }
 
     /**
-     * @Route("/listarCarros")
+     * @Route("/listarCarros", name="carro_listar")
      */
     public function carsAction()
     {
@@ -29,49 +28,13 @@ class CarController extends Controller
 
         $repo = $em->getRepository("CodeCarBundle:Carro");
 
-        $veiculos = $repo->findBy(array(), array('fabricante_id'=>'ASC'));
+        $veiculos = $repo->findBy(array(), array('fabricante'=>'ASC'));
 
         return $this->render('CodeCarBundle:Car:cars.html.twig', ['veiculos'=>$veiculos]);
     } 
 
     /**
-     * @Route("/listarFabricante")
-     */
-    public function fabricanteAction()
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $repo = $em->getRepository("CodeCarBundle:Carro");
-
-        $fabricante = $repo->getFabricante('Palio');
-
-        return $this->render('CodeCarBundle:Car:fabricante.html.twig', ['fabricantes'=>$fabricante]);
-    }      
-
-    /**
-     * @Route("/adicionarFabricante")
-     * @Template()
-     */
-    public function adicionarFabricanteAction(){
-
-        $fabricantes = array("FIAT", "BMW", "CITROEN", "ASTON MARTIN", "MASERATI","GM - CHEVROLET", "VW - VOLKSVAGEN",
-                             "TOYOTA", "PORSCHE","FERRARI"); 
-
-        $em = $this->getDoctrine()->getEntityManager();
-
-        foreach($fabricantes as $fabricante){
-          $novoFabricante = new Fabricante();
-          $novoFabricante->setNome($fabricante);
-          $em->persist($novoFabricante);  
-          $em->flush(); 
-        }
-
-        return new Response('Fabricantes cadastrados com sucesso.');
-        
-    }
-
-    /**
-     * @Route("/adicionarModelo")
+     * @Route("/adicionarModelo", name="carro_adicionar")
      * @Template()
      */
     public function adicionarModeloAction(){
@@ -103,7 +66,7 @@ class CarController extends Controller
                     break;
                   case $key == 'fabricante':
                        $fabricante = $this->getDoctrine()->getManager()->getRepository('CodeCarBundle:Fabricante')->findOneById($value);
-                       $novoModelo->setFabricante_id($fabricante); 
+                       $novoModelo->setFabricante($fabricante); 
                     break;
                   case $key == 'ano':
                        $novoModelo->setAno($value);

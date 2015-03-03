@@ -35,9 +35,9 @@ class Carro
 
     /**
      * @ORM\ManyToOne(targetEntity="Code\CarBundle\Entity\Fabricante", inversedBy="carros")
-     * @ORM\JoinColumn(name="fabricante_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="fabricante", referencedColumnName="id")
      **/
-    private $fabricante_id;
+    private $fabricante;
 
     /**
      * Gets the value of id.
@@ -136,25 +136,25 @@ class Carro
     }
 
     /**
-     * Gets the value of fabricante_id.
+     * Gets the value of fabricante.
      *
      * @return mixed
      */
-    public function getFabricante_id()
+    public function getFabricante()
     {
-        return $this->fabricante_id;
+        return $this->fabricante;
     }
 
     /**
-     * Sets the value of fabricante_id.
+     * Sets the value of fabricante.
      *
-     * @param mixed $fabricante_id the fabricante_id
+     * @param mixed $fabricante the fabricante
      *
      * @return self
      */
-    public function setFabricante_id($fabricante_id)
+    public function setFabricante(Fabricante $fab)
     {
-        $this->fabricante_id = $fabricante_id;
+        $this->fabricante = $fab;
 
         return $this;
     }
