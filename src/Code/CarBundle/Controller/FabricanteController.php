@@ -64,6 +64,80 @@ class FabricanteController extends Controller
             'form'   => $form->createView()
         );
     } 
+
+    /**
+     * @Route("/{id}/edit", name="fabricante_edit")
+     * @Template()
+     */
+    public function editAction($id)
+    {
+
+          $em = $this->getDoctrine()->getManager();
+
+          $entity = $em->getRepository("CodeCarBundle:Fabricante")->find($id);
+
+          if(!$entity){
+              throw $this->createNotFoundException("Registro não encontrado");
+          }
+
+          $form = $this->createForm(new FabricanteType(), $entity);
+          return[
+              'entity' => $entity,
+              'form'   => $form->createView()
+          ];
+    }     
+
+    /**
+     * @Route("/{id}/update", name="fabricante_update")
+     * @Template("CodeCarBundle:Fabricante:edit.html.twig")
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository("CodeCarBundle:Fabricante")->find($id);
+
+        if(!$entity){
+            throw $this->createNotFoundException("Registro não encontrado");      
+        }   
+
+        $form = $this->createForm(new FabricanteType(), $entity); 
+        $form->bind($request);
+
+        if($form->isValid()){
+          $em->persist($entity);
+          $em->flush();
+
+          return $this->redirect($this->generateUrl("fabricante"));
+        }                
+
+        return[
+            'entity' => $entity,
+            'form'   => $form->createView()
+        ];
+
+    }    
+
+    /**
+     * @Route("/{id}/delete", name="fabricante_delete")
+     * @Template()
+     */    public function deleteAction($id)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository("CodeCarBundle:Fabricante")->find($id);
+
+        if(!$entity){
+            throw $this->createNotFoundException("Registro não encontrado");      
+        }
+
+        $em->remove($entity);
+        $em->flush();   
+
+        return $this->redirect($this->generateUrl("fabricante"));
+    }
+
 /*
     public function fabricanteAction()
     {

@@ -5,7 +5,8 @@
 	<div class="container">
 		<h1>Fabricantes</h1>
 		<p>
-		<a href="{{ path('fabricante_new') }}" class="btn btn-default">Novo Produto</a>
+		<a href="{{ path('fabricante_new') }}" class="btn btn-default">
+		<span class="glyphicon glyphicon-plus"></span> Novo Fabricante</a>
 		</p>
 		<table class="table">
 			<tr>
@@ -18,7 +19,11 @@
 				<tr>
 					<td>{{ fabricante.id }}</td>
 					<td>{{ fabricante.nome }}</td>
-					<td></td>
+					<td><a href="{{ path('fabricante_edit', {'id': fabricante.id})}}" class="btn btn-info">
+          				<span class="glyphicon glyphicon-edit"></span> Editar </a>  
+          				<a href="{{ path('fabricante_delete', {'id': fabricante.id})}}" class="btn btn-danger">
+          				<span class="glyphicon glyphicon-remove"></span> Deletar </a>
+          			</td>
 				</tr>
 			{% endfor %}
 		</table>

@@ -3,10 +3,10 @@
 {% block body %}
 	<div class="container">
 
-	<form class="form-horizontal" action="{{ path('fabricante_create') }}" method="post">
+	<form class="form-horizontal" action="{{ path('fabricante_update', {'id': entity.id}) }}" method="post">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h1>Criar novo fabricante</h1>
+				<h1>Editando fabricante</h1>
 			</div>
 			<div class="panel-body">					
 					<div class="form-group">
@@ -21,9 +21,10 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" class="btn btn-success">Salvar</button>
+							<button type="submit" class="btn btn-success">
+							<span class="glyphicon glyphicon-saved"> Salvar</button>
 							<a href="{{ path('fabricante') }}" class="btn btn-info">
-							<span class="glyphicon glyphicon-step-backward"></span>Voltar</a>
+							<span class="glyphicon glyphicon-step-backward"></span> Voltar</a>
 						</div>
 					</div>
 			</div>				
