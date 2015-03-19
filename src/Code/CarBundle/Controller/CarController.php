@@ -7,17 +7,143 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Code\CarBundle\Entity\Carro;
+use Code\CarBundle\Form\CarroType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/carro")
  */
 class CarController extends Controller
 {
+    /**
+     * @Route("/", name="carro")
+     * @Template()
+     */
+    public function indexAction(){
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $repo = $em->getRepository("CodeCarBundle:Carro");
+        $carro = $repo->findAll();
+        return['carros'=>$carro];
+    }
+
+    /**
+     * @Route("/new", name="carro_new")
+     * @Template()
+     */
+    public function newAction()
+    {
+        $entity = new Carro();
+        $form = $this->createForm(new CarroType(), $entity);
+        return[
+            'entity' => $entity,
+            'form'   => $form->createView()
+        ];
+    }
+
+    /**
+     * @Route("/create", name="carro_create")
+     * @Template("CodeCarBundle:carro:new.html.twig")
+     */
+    public function createAction(Request $request)
+    {
+        $entity = new carro();
+        $form = $this->createForm(new CarroType(), $entity);
+        $form->bind($request);
+
+        if($form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('carro'));
+        }
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
+    } 
+
+    /**
+     * @Route("/{id}/edit", name="carro_edit")
+     * @Template()
+     */
+    public function editAction($id)
+    {
+
+          $em = $this->getDoctrine()->getManager();
+
+          $entity = $em->getRepository("CodeCarBundle:Carro")->find($id);
+
+          if(!$entity){
+              throw $this->createNotFoundException("Registro não encontrado");
+          }
+
+          $form = $this->createForm(new CarroType(), $entity);
+          return[
+              'entity' => $entity,
+              'form'   => $form->createView()
+          ];
+    }     
+
+    /**
+     * @Route("/{id}/update", name="carro_update")
+     * @Template("CodeCarBundle:Carro:edit.html.twig")
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository("CodeCarBundle:Carro")->find($id);
+
+        if(!$entity){
+            throw $this->createNotFoundException("Registro não encontrado");      
+        }   
+
+        $form = $this->createForm(new CarroType(), $entity); 
+        $form->bind($request);
+
+        if($form->isValid()){
+          $em->persist($entity);
+          $em->flush();
+
+          return $this->redirect($this->generateUrl("carro"));
+        }                
+
+        return[
+            'entity' => $entity,
+            'form'   => $form->createView()
+        ];
+
+    }    
+
+    /**
+     * @Route("/{id}/delete", name="carro_delete")
+     * @Template()
+     */    public function deleteAction($id)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository("CodeCarBundle:Carro")->find($id);
+
+        if(!$entity){
+            throw $this->createNotFoundException("Registro não encontrado");      
+        }
+
+        $em->remove($entity);
+        $em->flush();   
+
+        return $this->redirect($this->generateUrl("carro"));
+    }
+
+
 
     /**
      * @Route("/", name="carro_index")
      */
-    public function indexAction()
+   /* public function indexAction()
     {
         return $this->render('CodeCarBundle:Car:index.html.twig');
     }
@@ -25,7 +151,7 @@ class CarController extends Controller
     /**
      * @Route("/listarCarros", name="carro_listar")
      */
-    public function carsAction()
+    /*public function carsAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
 
@@ -40,7 +166,7 @@ class CarController extends Controller
      * @Route("/adicionarModelo", name="carro_adicionar")
      * @Template()
      */
-    public function adicionarModeloAction(){
+    /*public function adicionarModeloAction(){
 
         $carros = array(
                           array("modelo" => "147 C/ CL", "fabricante" => 1, "ano" => 1980, "cor"=> "BRANCO"),
@@ -86,6 +212,6 @@ class CarController extends Controller
 
         return new Response('Modelos cadastrados com sucesso.');
         
-    }
+    }*/
 
 }
