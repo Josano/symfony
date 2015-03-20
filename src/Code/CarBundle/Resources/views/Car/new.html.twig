@@ -1,49 +1,48 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-	<div class="container">
+    <div class="panel panel-default">
+            <div class="panel-heading">Cadastrar Veiculo</div>
+        <div class="panel-body">
+			<form class="form-horizontal" action="{{ path('carro_create') }}" method="post">
+	            <fieldset>					
+					<div class="form-group row">
+						{{ form_start(form) }}
+						<div class="col-lg-3">
+							{{ form_label(form.fabricante, 'Fabricante: ', {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
 
-	<form class="form-horizontal" action="{{ path('carro_create') }}" method="post">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<h1>Criar novo Veiculo</h1>
-			</div>
-			<div class="panel-body">					
-				<div class="form-group">
-					{{ form_start(form) }}
-					<div class="col-xs-4">
-						{{ form_label(form.fabricante, 'Fabricante: ', {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+							{{ form_widget(form.fabricante, { 'attr': {'class': 'form-control'} }) }}
+						</div>
+					</div>	
+					<div class="form-group row">					
+						<div class="col-lg-7">
+							{{ form_label(form.modelo, 'Modelo: ', {'label_attr': {'class': 'control-label'}}) }}
 
-						{{ form_widget(form.fabricante, { 'attr': {'class': 'form-control'} }) }}
-					</div>					
-					<div class="col-xs-4">
-						{{ form_label(form.modelo, 'Modelo: ', {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-
-						{{ form_widget(form.modelo, { 'attr': {'class': 'form-control'} }) }}
+							{{ form_widget(form.modelo, { 'attr': {'class': 'form-control'} }) }}
+						</div>
 					</div>
-					<div class="col-xs-4">
-						{{ form_label(form.ano, 'Ano: ', {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+					<div class="form-group row">	
+						<div class="col-lg-2">
+							{{ form_label(form.ano, 'Ano: ', {'label_attr': {'class': 'control-label'}}) }}
 
-						{{ form_widget(form.ano, { 'attr': {'class': 'form-control'} }) }}
+							{{ form_widget(form.ano, { 'attr': {'class': 'form-control'} }) }}
+						</div>
+						<div class="col-lg-3">
+							{{ form_label(form.cor, 'Cor: ', {'label_attr': {'class': 'control-label'}}) }}
+
+							{{ form_widget(form.cor, { 'attr': {'class': 'form-control'} }) }}
+						</div>										
+
+						{{ form_end(form) }}
 					</div>
-					<div class="col-xs-4">
-						{{ form_label(form.cor, 'Cor: ', {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-
-						{{ form_widget(form.cor, { 'attr': {'class': 'form-control'} }) }}
-					</div>										
-
-					{{ form_end(form) }}
-				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-success">Salvar</button>
-						<a href="{{ path('carro') }}" class="btn btn-info">
-						<span class="glyphicon glyphicon-step-backward"></span>Voltar</a>
+					<div class="form-actions">
+							<button type="submit" class="btn btn-success">
+							<span class="glyphicon glyphicon-saved"> Salvar</button>
+							<a href="{{ path('carro') }}" class="btn btn-info">
+							<span class="glyphicon glyphicon-step-backward"></span> Voltar</a>
 					</div>
-				</div>
-			</div>				
-		</div>					
-	</form>
-
-	</div>
+				<fieldset>					
+			</form>
+        </div>
+    </div>	
 {% endblock %}

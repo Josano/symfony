@@ -2,30 +2,40 @@
 
 {% block body %}
 
-	<div class="container">
-		<h1>Veiculos</h1>
-		<p>
-		<a href="{{ path('carro_new') }}" class="btn btn-default">
-		<span class="glyphicon glyphicon-plus"></span> Novo Veiculo</a>
-		</p>
-		<table class="table">
-			<tr>
-				<th>ID</th>
-				<th>Nome</th>
-				<th>Ação</th>
-			</tr>
-
-			{% for carro in carros %}
-				<tr>
-					<td>{{ carro.id }}</td>
-					<td>{{ carro.modelo }}</td>
-					<td><a href="{{ path('carro_edit', {'id': carro.id})}}" class="btn btn-info">
-          				<span class="glyphicon glyphicon-edit"></span> Editar </a>  
-          				<a href="{{ path('carro_delete', {'id': carro.id})}}" class="btn btn-danger">
-          				<span class="glyphicon glyphicon-remove"></span> Deletar </a>
-          			</td>
-				</tr>
-			{% endfor %}
-		</table>
-	</div>
+    <div id="content">
+	    <div class="panel panel-default grid">
+	        <div class="panel-heading">Lista de Veiculos</div>  
+	        	<div class="panel-tools">
+	                <div class="btn-group">
+	                    <a class="btn" href="{{ path('carro_new') }}">
+	                    	<i class="glyphicon glyphicon-file"></i>Novo
+	              		</a>
+	              	</div>		
+              	</div>	
+              	<hr>	
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nome</th>
+							<th>Ação</th>
+						</tr>
+		            </thead>
+					<tbody>
+						{% for carro in carros %}
+							<tr>
+								<td>{{ carro.id }}</td>
+								<td>{{ carro.modelo }}</td>
+								<td><a href="{{ path('carro_edit', {'id': carro.id})}}" class="btn btn-info">
+			          				<span class="glyphicon glyphicon-edit"></span> Editar </a>  
+			          				<a href="{{ path('carro_delete', {'id': carro.id})}}" class="btn btn-danger">
+			          				<span class="glyphicon glyphicon-remove"></span> Deletar </a>
+			          			</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>	
+		</div>
+	</div>	
 {% endblock %}

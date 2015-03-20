@@ -3,29 +3,38 @@
 {% block body %}
 
 	<div class="container">
-		<h1>Fabricantes</h1>
-		<p>
-		<a href="{{ path('fabricante_new') }}" class="btn btn-default">
-		<span class="glyphicon glyphicon-plus"></span> Novo Fabricante</a>
-		</p>
-		<table class="table">
-			<tr>
-				<th>ID</th>
-				<th>Nome</th>
-				<th>Ação</th>
-			</tr>
+	    <div class="panel panel-default grid">
+	        <div class="panel-heading">Lista de Veiculos</div>  
+	        	<div class="panel-tools">
+	                <div class="btn-group">
+	                    <a class="btn" href="{{ path('fabricante_new') }}">
+	                    	<i class="glyphicon glyphicon-file"></i>Novo
+	              		</a>
+	              	</div>		
+              	</div>	
+              	<hr>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nome</th>
+							<th>Ação</th>
+						</tr>
+		            </thead>
 
-			{% for fabricante in fabricantes %}
-				<tr>
-					<td>{{ fabricante.id }}</td>
-					<td>{{ fabricante.nome }}</td>
-					<td><a href="{{ path('fabricante_edit', {'id': fabricante.id})}}" class="btn btn-info">
-          				<span class="glyphicon glyphicon-edit"></span> Editar </a>  
-          				<a href="{{ path('fabricante_delete', {'id': fabricante.id})}}" class="btn btn-danger">
-          				<span class="glyphicon glyphicon-remove"></span> Deletar </a>
-          			</td>
-				</tr>
-			{% endfor %}
-		</table>
-	</div>
+					{% for fabricante in fabricantes %}
+						<tr>
+							<td>{{ fabricante.id }}</td>
+							<td>{{ fabricante.nome }}</td>
+							<td><a href="{{ path('fabricante_edit', {'id': fabricante.id})}}" class="btn btn-info">
+		          				<span class="glyphicon glyphicon-edit"></span> Editar </a>  
+		          				<a href="{{ path('fabricante_delete', {'id': fabricante.id})}}" class="btn btn-danger">
+		          				<span class="glyphicon glyphicon-remove"></span> Deletar </a>
+		          			</td>
+						</tr>
+					{% endfor %}
+				</table>
+			</div>	
+		</div>
+	</div>	
 {% endblock %}
