@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
+use Code\CarBundle\Service\CarroService;
 use Code\CarBundle\Entity\Carro;
 use Code\CarBundle\Form\CarroType;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,8 +54,8 @@ class CarController extends Controller
 
         if($form->isValid()){
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $CarroService = new CarroService($em);
+            $CarroService->insert($entity);
 
             return $this->redirect($this->generateUrl('carro'));
         }
@@ -73,8 +74,8 @@ class CarController extends Controller
     {
 
           $em = $this->getDoctrine()->getManager();
-
-          $entity = $em->getRepository("CodeCarBundle:Carro")->find($id);
+          $CarroService = new CarroService($em);
+          $entity = $CarroService->find("CodeCarBundle:Carro", $id); 
 
           if(!$entity){
               throw $this->createNotFoundException("Registro não encontrado");
@@ -94,8 +95,8 @@ class CarController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository("CodeCarBundle:Carro")->find($id);
+        $CarroService = new CarroService($em);
+        $entity = $CarroService->find("CodeCarBundle:Carro", $id); 
 
         if(!$entity){
             throw $this->createNotFoundException("Registro não encontrado");      
@@ -105,8 +106,7 @@ class CarController extends Controller
         $form->bind($request);
 
         if($form->isValid()){
-          $em->persist($entity);
-          $em->flush();
+            $CarroService->record($entity);
 
           return $this->redirect($this->generateUrl("carro"));
         }                
@@ -125,15 +125,14 @@ class CarController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository("CodeCarBundle:Carro")->find($id);
+        $CarroService = new CarroService($em);
+        $entity = $CarroService->find("CodeCarBundle:Carro", $id); 
 
         if(!$entity){
             throw $this->createNotFoundException("Registro não encontrado");      
         }
 
-        $em->remove($entity);
-        $em->flush();   
+        $CarroService->remove($entity);  
 
         return $this->redirect($this->generateUrl("carro"));
     }

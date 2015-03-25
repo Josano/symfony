@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  *@ORM\Table("carro")
  *@ORM\Entity(repositoryClass="Code\CarBundle\Entity\CarroRepository") 
  */
-class Carro
+class Carro implements CarroInterface 
 {
 
     /**
@@ -158,4 +158,9 @@ class Carro
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getNome();
+    }    
 }

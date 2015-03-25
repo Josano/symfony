@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
+use Code\CarBundle\Service\FabricanteService;
 use Code\CarBundle\Entity\Fabricante;
 use Code\CarBundle\Form\FabricanteType;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +25,7 @@ class FabricanteController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $repo = $em->getRepository("CodeCarBundle:Fabricante");
         $fabricantes = $repo->findAll();
-        return['fabricantes'=>$fabricantes];
+        return['fabricantes'=>$fabricantes]; 
     }
 
     /**
@@ -53,8 +54,8 @@ class FabricanteController extends Controller
 
         if($form->isValid()){
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $fabricanteService = new FabricanteService($em);
+            $fabricanteService->insert($entity);
 
             return $this->redirect($this->generateUrl('fabricante'));
         }
@@ -73,8 +74,8 @@ class FabricanteController extends Controller
     {
 
           $em = $this->getDoctrine()->getManager();
-
-          $entity = $em->getRepository("CodeCarBundle:Fabricante")->find($id);
+          $fabricanteService = new FabricanteService($em);
+          $entity = $fabricanteService->find("CodeCarBundle:Fabricante", $id);          
 
           if(!$entity){
               throw $this->createNotFoundException("Registro não encontrado");
@@ -94,8 +95,8 @@ class FabricanteController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository("CodeCarBundle:Fabricante")->find($id);
+        $fabricanteService = new FabricanteService($em);
+        $entity = $fabricanteService->find("CodeCarBundle:Fabricante", $id);  
 
         if(!$entity){
             throw $this->createNotFoundException("Registro não encontrado");      
@@ -105,10 +106,9 @@ class FabricanteController extends Controller
         $form->bind($request);
 
         if($form->isValid()){
-          $em->persist($entity);
-          $em->flush();
+            $fabricanteService->record($entity);
 
-          return $this->redirect($this->generateUrl("fabricante"));
+            return $this->redirect($this->generateUrl("fabricante"));
         }                
 
         return[
@@ -125,15 +125,14 @@ class FabricanteController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository("CodeCarBundle:Fabricante")->find($id);
+        $fabricanteService = new FabricanteService($em);
+        $entity = $fabricanteService->find("CodeCarBundle:Fabricante", $id);  
 
         if(!$entity){
             throw $this->createNotFoundException("Registro não encontrado");      
         }
 
-        $em->remove($entity);
-        $em->flush();   
+        $fabricanteService->remove($entity);   
 
         return $this->redirect($this->generateUrl("fabricante"));
     }

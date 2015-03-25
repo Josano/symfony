@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *@ORM\Table(name="fabricante")
  *@ORM\Entity(repositoryClass="Code\CarBundle\Entity\FabricanteRepository")  
  */
-class Fabricante
+class Fabricante implements FabricanteInterface
 {
 	/**
      * @ORM\Column(type="integer", length=11)
