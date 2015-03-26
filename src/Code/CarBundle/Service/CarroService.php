@@ -24,10 +24,7 @@ class CarroService
 
 	public function find($repositorio, $id)
 	{
-		$em = $this->em;
-		$em = $em->getRepository($repositorio)->find($id);
-
-        return $em;
+		return $this->em->getRepository($repositorio)->find($id);
 	}	
 
 	public function remove(CarroInterface $entity)
@@ -36,12 +33,4 @@ class CarroService
         $em->remove($entity);
         $em->flush();
 	}	
-
-	public function record(CarroInterface $entity)
-	{
-		$em = $this->em;
-		$em->persist($entity);
-        $em->flush();
-	}		
-
 }

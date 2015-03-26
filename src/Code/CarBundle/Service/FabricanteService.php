@@ -24,10 +24,7 @@ class FabricanteService
 
 	public function find($repositorio, $id)
 	{
-		$em = $this->em;
-		$em = $em->getRepository($repositorio)->find($id);
-
-        return $em;
+		return $this->em->getRepository($repositorio)->find($id);
 	}	
 
 	public function remove(FabricanteInterface $entity)
@@ -35,13 +32,5 @@ class FabricanteService
 		$em = $this->em;
         $em->remove($entity);
         $em->flush();
-	}	
-
-	public function record(FabricanteInterface $entity)
-	{
-		$em = $this->em;
-		$em->persist($entity);
-        $em->flush();
 	}		
-
 }

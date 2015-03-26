@@ -54,7 +54,7 @@ class CarController extends Controller
 
         if($form->isValid()){
             $em = $this->getDoctrine()->getManager();
-            $CarroService = new CarroService($em);
+            $CarroService = $this->get('code_car.service.carro');
             $CarroService->insert($entity);
 
             return $this->redirect($this->generateUrl('carro'));
@@ -74,7 +74,7 @@ class CarController extends Controller
     {
 
           $em = $this->getDoctrine()->getManager();
-          $CarroService = new CarroService($em);
+          $CarroService = $this->get('code_car.service.carro');
           $entity = $CarroService->find("CodeCarBundle:Carro", $id); 
 
           if(!$entity){
@@ -95,7 +95,7 @@ class CarController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $CarroService = new CarroService($em);
+        $CarroService = $this->get('code_car.service.carro');
         $entity = $CarroService->find("CodeCarBundle:Carro", $id); 
 
         if(!$entity){
@@ -106,7 +106,7 @@ class CarController extends Controller
         $form->bind($request);
 
         if($form->isValid()){
-            $CarroService->record($entity);
+            $CarroService->insert($entity);
 
           return $this->redirect($this->generateUrl("carro"));
         }                

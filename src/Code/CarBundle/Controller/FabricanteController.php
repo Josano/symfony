@@ -54,7 +54,7 @@ class FabricanteController extends Controller
 
         if($form->isValid()){
             $em = $this->getDoctrine()->getManager();
-            $fabricanteService = new FabricanteService($em);
+            $fabricanteService = $this->get('code_car.service.fabricante');
             $fabricanteService->insert($entity);
 
             return $this->redirect($this->generateUrl('fabricante'));
@@ -74,7 +74,7 @@ class FabricanteController extends Controller
     {
 
           $em = $this->getDoctrine()->getManager();
-          $fabricanteService = new FabricanteService($em);
+          $fabricanteService = $this->get('code_car.service.fabricante');
           $entity = $fabricanteService->find("CodeCarBundle:Fabricante", $id);          
 
           if(!$entity){
@@ -95,7 +95,7 @@ class FabricanteController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $fabricanteService = new FabricanteService($em);
+        $fabricanteService = $this->get('code_car.service.fabricante');
         $entity = $fabricanteService->find("CodeCarBundle:Fabricante", $id);  
 
         if(!$entity){
@@ -106,7 +106,7 @@ class FabricanteController extends Controller
         $form->bind($request);
 
         if($form->isValid()){
-            $fabricanteService->record($entity);
+            $fabricanteService->insert($entity);
 
             return $this->redirect($this->generateUrl("fabricante"));
         }                
@@ -125,7 +125,7 @@ class FabricanteController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $fabricanteService = new FabricanteService($em);
+        $fabricanteService = $this->get('code_car.service.fabricante');
         $entity = $fabricanteService->find("CodeCarBundle:Fabricante", $id);  
 
         if(!$entity){
